@@ -1,0 +1,49 @@
+#Project Code[iot]
+int Time;
+int distance;
+
+void setup() {
+  pinMode(2, OUTPUT);
+  pinMode(3, INPUT);
+  pinMode(4, OUTPUT);
+  pinMode(5, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(7, OUTPUT);
+  pinMode(8, OUTPUT);   // Buzzer
+  Serial.begin(9600);
+}
+
+void loop() {
+
+  
+  digitalWrite(2, LOW);
+  delayMicroseconds(2);
+  digitalWrite(2, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(2, LOW);
+
+  Time = pulseIn(3, HIGH);
+  distance = 0.0343 * Time / 2;
+
+  Serial.println(distance);
+  delay(100);
+
+  // Reset all
+  digitalWrite(4, LOW);
+  digitalWrite(5, LOW);
+  digitalWrite(6, LOW);
+  digitalWrite(7, LOW);
+  digitalWrite(8, LOW);
+
+  if (distance <= 30) digitalWrite(4, HIGH);
+  if (distance <= 25) digitalWrite(5, HIGH);
+  if (distance <= 20) digitalWrite(6, HIGH);
+  if (distance <= 15) digitalWrite(7, HIGH);
+
+  
+  if (distance <= 10) {
+    digitalWrite(8, HIGH);
+     Serial.println("alert please go away from screen");
+
+  }
+}
